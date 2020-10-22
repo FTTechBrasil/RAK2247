@@ -46,3 +46,8 @@ service ttn-gateway status
 
 # The Things Network
 After the installation you can go to [TTNs Console](https://console.thethingsnetwork.org/gateways) and register your gateway using the legacy package fowarder with the `GATEWAY EUID` that you found before.
+
+If you have any questions on how to register your gateway, please follow [TTNs tutorial](https://www.thethingsnetwork.org/docs/gateways/registration.html).
+
+**BE AWARE** that it may take some minutes to your gateway to show as connected on TTN.
+

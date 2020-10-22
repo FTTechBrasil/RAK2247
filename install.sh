@@ -8,13 +8,23 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
-GATEWAY_FREQ="au_915_928"
 GLOBAL_FOLDER=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd
 NOT_SUDO="sudo -u pi"
 
-echo "**********************************************************************"
-echo "The Things Network Gateway installer for the RAK2247 mPCIe Concetrator"
-echo "**********************************************************************"
+echo "**************************************************************************"
+echo "The Things Network Gateway installer for the RAK2247_USB mPCIe Concetrator"
+echo "**************************************************************************"
+echo
+
+PS3="Choose a frequency for the global_conf: "
+options=(as_923 au_915_928 cn_470_510 eu_433 eu_863_870 in_865_867 kr_920_923 ru_864_870 us_902_928)
+select menu in "${options[@]}";
+do
+  echo -e "\nYou picked $menu ($REPLY)"
+  GATEWAY_FREQ=$menu
+  break;
+done
+
 echo
 
 if [ -d "rak_common_for_gateway" ]; then
@@ -48,18 +58,19 @@ echo  >> rak_common_for_gateway/lora/rak2247_usb/install.sh
 
 # Replace start with improved one
 cp start.sh rak_common_for_gateway/lora/start.sh
-# More friendly way to check EUI
-cp showeui.sh /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/ 
 # install rak2247_usb
 pushd rak_common_for_gateway/lora/rak2247_usb
     ./install.sh
 popd
+# More friendly way to check EUI
+cp showeui.sh $GLOBAL_FOLDER/showeui.sh
 
 # Replace global_conf.json
 cp $GLOBAL_FOLDER/global_conf/global_conf.$GATEWAY_FREQ.json $GLOBAL_FOLDER/global_conf.json
 echo "**********************************************************************"
 
-./showeuish
+sleep 10
+./showeui.sh
 
 # sudo systemctl stop ttn-gateway.service
 # service ttn-gateway status

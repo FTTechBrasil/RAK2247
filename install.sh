@@ -9,7 +9,7 @@ if [ $UID != 0 ]; then
 fi
 
 GLOBAL_FOLDER=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd
-NOT_SUDO="sudo -u pi"
+NOT_SUDO="sudo -u fttech"
 
 echo "**************************************************************************"
 echo "The Things Network Gateway installer for the RAK2247_USB mPCIe Concetrator"
